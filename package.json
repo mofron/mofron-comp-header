@@ -1,6 +1,6 @@
 {
   "name": "mofron-parts-header",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "header parts of mofron",
   "main": "index.js",
   "scripts": {

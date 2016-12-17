@@ -3,17 +3,19 @@
  * @brief  Base UI of Header
  * @author simpart
  */
-
-module.exports = class extends mofron.parts.Base {
+mofron.parts.Header = class extends mofron.parts.Base {
     
     initContents (vd, prm) {
         try {
             /* set header style */
             var hdr_conts = new mofron.util.Vdom('div');
-            hdr_conts.setStyle('width', '100%');
+            
+            hdr_conts.setStyle('width'        , '100%');
             hdr_conts.setStyle('border-bottom', 'solid 1px lightgray');
-            hdr_conts.setStyle('position', 'fixed');
+            hdr_conts.setStyle('position'     , 'fixed');
+            
             vd.addChild(hdr_conts);
+            
             var hdr_pad = new mofron.util.Vdom('div');
             vd.addChild(hdr_pad);
             
