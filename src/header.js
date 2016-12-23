@@ -1,9 +1,9 @@
 /**
  * @file   Header.js
- * @brief  Base UI of Header
+ * @brief  Header Component Class
  * @author simpart
  */
-mofron.parts.Header = class extends mofron.parts.Base {
+mofron.comp.Header = class extends mofron.comp.Base {
     
     initContents (vd, prm) {
         try {
@@ -22,7 +22,7 @@ mofron.parts.Header = class extends mofron.parts.Base {
             /* set default height */
             this.height(50);
             
-            /* child parts is added at horizon layout */
+            /* child comp is added at horizon layout */
             this.addLayout(new mofron.layout.Horizon());
             
             if (undefined != mofron.theme) {

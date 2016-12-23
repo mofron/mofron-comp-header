@@ -1,4 +1,3 @@
-require("mofron-layout-horizon");
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -59,11 +58,11 @@ require("mofron-layout-horizon");
 
 	/**
 	 * @file   Header.js
-	 * @brief  Base UI of Header
+	 * @brief  Header Component Class
 	 * @author simpart
 	 */
-	mofron.parts.Header = function (_mofron$parts$Base) {
-	    _inherits(_class, _mofron$parts$Base);
+	mofron.comp.Header = function (_mofron$comp$Base) {
+	    _inherits(_class, _mofron$comp$Base);
 
 	    function _class() {
 	        _classCallCheck(this, _class);
@@ -90,7 +89,7 @@ require("mofron-layout-horizon");
 	                /* set default height */
 	                this.height(50);
 
-	                /* child parts is added at horizon layout */
+	                /* child comp is added at horizon layout */
 	                this.addLayout(new mofron.layout.Horizon());
 
 	                if (undefined != mofron.theme) {
@@ -192,7 +191,7 @@ require("mofron-layout-horizon");
 	    }]);
 
 	    return _class;
-	}(mofron.parts.Base);
+	}(mofron.comp.Base);
 
 /***/ }
 /******/ ]);
