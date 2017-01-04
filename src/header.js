@@ -7,14 +7,15 @@ mofron.comp.Header = class extends mofron.comp.Base {
     
     initContents (vd, prm) {
         try {
+            this.name = "Header";
+            
             /* set header style */
             var hdr_conts = new mofron.util.Vdom('div');
-            
             hdr_conts.setStyle('width'        , '100%');
             hdr_conts.setStyle('border-bottom', 'solid 1px lightgray');
             hdr_conts.setStyle('position'     , 'fixed');
-            
             vd.addChild(hdr_conts);
+            this.target = hdr_conts;
             
             var hdr_pad = new mofron.util.Vdom('div');
             vd.addChild(hdr_pad);
@@ -25,26 +26,19 @@ mofron.comp.Header = class extends mofron.comp.Base {
             /* child comp is added at horizon layout */
             this.addLayout(new mofron.layout.Horizon());
             
-            if (undefined != mofron.theme) {
-                var clr = mofron.theme.getColor(0);
-                if (null !== clr) {
-                    this.color(clr);
-                }
-            }
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
-    setThemeColor () {
+    init () {
         try {
-            if (undefined != mofron.theme) {
-                var clr = mofron.util.theme.getColor(0);
-                if (null !== clr) {
-                    this.color(clr);
-                }
+            var clr = this.theme().get('Color', 0);
+            if (null != clr) {
+                this.color(clr);
             }
+            super.init();
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -60,14 +54,6 @@ mofron.comp.Header = class extends mofron.comp.Base {
         }
     }
     
-    getTarget() {
-        try {
-            return this.vdom.getChild(0);
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
     /**
      * set/get header height
      *

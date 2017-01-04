@@ -1,3 +1,4 @@
+require('mofron-layout-horizon');
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -50,6 +51,8 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -74,14 +77,15 @@
 	        key: 'initContents',
 	        value: function initContents(vd, prm) {
 	            try {
+	                this.name = "Header";
+
 	                /* set header style */
 	                var hdr_conts = new mofron.util.Vdom('div');
-
 	                hdr_conts.setStyle('width', '100%');
 	                hdr_conts.setStyle('border-bottom', 'solid 1px lightgray');
 	                hdr_conts.setStyle('position', 'fixed');
-
 	                vd.addChild(hdr_conts);
+	                this.target = hdr_conts;
 
 	                var hdr_pad = new mofron.util.Vdom('div');
 	                vd.addChild(hdr_pad);
@@ -91,28 +95,20 @@
 
 	                /* child comp is added at horizon layout */
 	                this.addLayout(new mofron.layout.Horizon());
-
-	                if (undefined != mofron.theme) {
-	                    var clr = mofron.theme.getColor(0);
-	                    if (null !== clr) {
-	                        this.color(clr);
-	                    }
-	                }
 	            } catch (e) {
 	                console.error(e.stack);
 	                throw e;
 	            }
 	        }
 	    }, {
-	        key: 'setThemeColor',
-	        value: function setThemeColor() {
+	        key: 'init',
+	        value: function init() {
 	            try {
-	                if (undefined != mofron.theme) {
-	                    var clr = mofron.util.theme.getColor(0);
-	                    if (null !== clr) {
-	                        this.color(clr);
-	                    }
+	                var clr = this.theme().get('Color', 0);
+	                if (null != clr) {
+	                    this.color(clr);
 	                }
+	                _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), 'init', this).call(this);
 	            } catch (e) {
 	                console.error(e.stack);
 	                throw e;
@@ -128,16 +124,7 @@
 	                throw e;
 	            }
 	        }
-	    }, {
-	        key: 'getTarget',
-	        value: function getTarget() {
-	            try {
-	                return this.vdom.getChild(0);
-	            } catch (e) {
-	                console.error(e.stack);
-	                throw e;
-	            }
-	        }
+
 	        /**
 	         * set/get header height
 	         *
