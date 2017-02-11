@@ -51,8 +51,6 @@ require('mofron-layout-horizon');
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -64,51 +62,63 @@ require('mofron-layout-horizon');
 	 * @brief  Header Component Class
 	 * @author simpart
 	 */
-	mofron.comp.Header = function (_mofron$comp$Base) {
-	    _inherits(_class, _mofron$comp$Base);
+	mofron.comp.Header = function (_mofron$Component) {
+	    _inherits(_class, _mofron$Component);
 
-	    function _class() {
+	    /**
+	     * initialize component
+	     *
+	     * @param prm (object) Component
+	     */
+	    function _class(prm, opt) {
 	        _classCallCheck(this, _class);
 
-	        return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+	        try {
+	            var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, prm));
+
+	            _this.name("Header");
+
+	            _this.m_height = 50;
+	            if (null !== opt) {
+	                _this.option(opt);
+	            }
+	        } catch (e) {
+	            console.error(e.stack);
+	            throw e;
+	        }
+	        return _this;
 	    }
 
 	    _createClass(_class, [{
-	        key: 'initContents',
-	        value: function initContents(vd, prm) {
+	        key: 'initDomConts',
+	        value: function initDomConts(prm) {
 	            try {
-	                this.name = "Header";
+	                /* set header dom contents */
+	                var hdr = new mofron.util.Vdom('div', this);
+	                this.vdom().addChild(hdr);
+	                this.vdom().addChild(new mofron.util.Vdom('div', this));
+	                this.target(hdr);
 
-	                /* set header style */
-	                var hdr_conts = new mofron.util.Vdom('div');
-	                hdr_conts.setStyle('width', '100%');
-	                hdr_conts.setStyle('border-bottom', 'solid 1px lightgray');
-	                hdr_conts.setStyle('position', 'fixed');
-	                vd.addChild(hdr_conts);
-	                this.target = hdr_conts;
-
-	                var hdr_pad = new mofron.util.Vdom('div');
-	                vd.addChild(hdr_pad);
+	                /* set style */
+	                hdr.style('width', '100%');
+	                hdr.style('border-bottom', 'solid 1px lightgray');
 
 	                /* set default height */
-	                this.height(50);
+	                this.height(this.height());
 
 	                /* child comp is added at horizon layout */
 	                this.addLayout(new mofron.layout.Horizon());
-	            } catch (e) {
-	                console.error(e.stack);
-	                throw e;
-	            }
-	        }
-	    }, {
-	        key: 'init',
-	        value: function init() {
-	            try {
-	                var clr = this.theme().get('Color', 0);
+
+	                /* set child component */
+	                if (null !== prm && 'object' === (typeof prm === 'undefined' ? 'undefined' : _typeof(prm))) {
+	                    this.addChild(prm);
+	                }
+
+	                /* set theme color */
+	                var clr = this.theme().getColor(0);
 	                if (null != clr) {
 	                    this.color(clr);
 	                }
-	                _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), 'init', this).call(this);
 	            } catch (e) {
 	                console.error(e.stack);
 	                throw e;
@@ -118,7 +128,7 @@ require('mofron-layout-horizon');
 	        key: 'getEventTgt',
 	        value: function getEventTgt() {
 	            try {
-	                return this.vdom; //.getChild(1);
+	                return this.vdom();
 	            } catch (e) {
 	                console.error(e.stack);
 	                throw e;
@@ -135,17 +145,21 @@ require('mofron-layout-horizon');
 	        key: 'height',
 	        value: function height(val) {
 	            try {
-	                var _val = val === undefined ? null : val;
-	                var hdr = this.getTarget();
-
-	                if (null === _val) {
-	                    return hdr.getStyle('height');
+	                if (undefined === val) {
+	                    return this.m_height;
 	                }
-	                if ('number' != typeof _val) {
+
+	                if ('number' !== typeof val || 0 > val) {
 	                    throw new Error('invalid parameter');
 	                }
-	                hdr.setStyle('height', val + 'px');
-	                this.vdom.getChild(1).setStyle('height', val + 'px');
+
+	                if (null === this.vdom()) {
+	                    this.m_height = val;
+	                    return;
+	                }
+
+	                this.target().style('height', val + 'px');
+	                this.vdom().getChild(1).style('height', val + 'px');
 	            } catch (e) {
 	                console.error(e.stack);
 	                throw e;
@@ -162,14 +176,14 @@ require('mofron-layout-horizon');
 	        key: 'color',
 	        value: function color(clr) {
 	            try {
-	                var _clr = clr === undefined ? null : clr;
-	                if (null === _clr) {
-	                    return this.getStyle();
+	                if (undefined === clr) {
+	                    return mofron.func.getColorObj(this.style('background'));
 	                }
-	                if ('object' != (typeof _clr === 'undefined' ? 'undefined' : _typeof(_clr))) {
+
+	                if (null === clr || 'object' !== (typeof clr === 'undefined' ? 'undefined' : _typeof(clr))) {
 	                    throw new Error('invalid parameter');
 	                }
-	                this.style('background', _clr.getStyle());
+	                this.style('background', clr.getStyle());
 	            } catch (e) {
 	                console.error(e.stack);
 	                throw e;
@@ -178,7 +192,7 @@ require('mofron-layout-horizon');
 	    }]);
 
 	    return _class;
-	}(mofron.comp.Base);
+	}(mofron.Component);
 
 /***/ }
 /******/ ]);

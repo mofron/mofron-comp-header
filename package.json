@@ -1,6 +1,6 @@
 {
   "name": "mofron-comp-header",
-  "version": "0.0.7",
+  "version": "0.3.6",
   "description": "header component for mofron",
   "main": "dist/header.js",
   "scripts": {
@@ -9,6 +9,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/simpart/mofron-comp-header.git"
+  },
+  "dependencies": {
+    "mofron-layout-horizon"  : ""
   },
   "keywords": [
     "mofron"

@@ -3,42 +3,56 @@
  * @brief  Header Component Class
  * @author simpart
  */
-mofron.comp.Header = class extends mofron.comp.Base {
+mofron.comp.Header = class extends mofron.Component {
     
-    initContents (vd, prm) {
+    /**
+     * initialize component
+     *
+     * @param prm (object) Component
+     */
+    constructor (prm, opt) {
         try {
-            this.name = "Header";
+            super(prm);
+            this.name("Header");
             
-            /* set header style */
-            var hdr_conts = new mofron.util.Vdom('div');
-            hdr_conts.setStyle('width'        , '100%');
-            hdr_conts.setStyle('border-bottom', 'solid 1px lightgray');
-            hdr_conts.setStyle('position'     , 'fixed');
-            vd.addChild(hdr_conts);
-            this.target = hdr_conts;
-            
-            var hdr_pad = new mofron.util.Vdom('div');
-            vd.addChild(hdr_pad);
-            
-            /* set default height */
-            this.height(50);
-            
-            /* child comp is added at horizon layout */
-            this.addLayout(new mofron.layout.Horizon());
-            
+            this.m_height = 50;
+            if (null !== opt) {
+                this.option(opt);
+            }
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
-    init () {
+    initDomConts (prm) {
         try {
-            var clr = this.theme().get('Color', 0);
+            /* set header dom contents */
+            var hdr = new mofron.util.Vdom('div',this);
+            this.vdom().addChild(hdr);
+            this.vdom().addChild(new mofron.util.Vdom('div',this));
+            this.target(hdr);
+            
+            /* set style */
+            hdr.style('width'        , '100%');
+            hdr.style('border-bottom', 'solid 1px lightgray');
+            
+            /* set default height */
+            this.height(this.height());
+            
+            /* child comp is added at horizon layout */
+            this.addLayout(new mofron.layout.Horizon());
+            
+            /* set child component */
+            if ((null !== prm) && ('object' === typeof prm)) {
+                this.addChild(prm);
+            }
+            
+            /* set theme color */
+            var clr = this.theme().getColor(0);
             if (null != clr) {
                 this.color(clr);
             }
-            super.init();
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -47,7 +61,7 @@ mofron.comp.Header = class extends mofron.comp.Base {
     
     getEventTgt () {
         try {
-            return this.vdom;//.getChild(1);
+            return this.vdom();
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -61,17 +75,21 @@ mofron.comp.Header = class extends mofron.comp.Base {
      */
     height (val) {
         try {
-            var _val = (val === undefined) ? null : val;
-            var hdr  = this.getTarget();
-            
-            if (null === _val) {
-                return hdr.getStyle('height');
+            if (undefined === val) {
+                return this.m_height;
             }
-            if ('number' != (typeof _val)) {
+            
+            if (('number' !== typeof val) || (0 > val)) {
                 throw new Error('invalid parameter');
             }
-            hdr.setStyle('height', val + 'px');
-            this.vdom.getChild(1).setStyle('height', val + 'px');
+            
+            if (null === this.vdom()) {
+                this.m_height = val;
+                return;
+            }
+            
+            this.target().style('height', val + 'px');
+            this.vdom().getChild(1).style('height', val + 'px');
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -85,14 +103,16 @@ mofron.comp.Header = class extends mofron.comp.Base {
      */
     color (clr) {
         try {
-            var _clr = (clr === undefined) ? null : clr;
-            if (null === _clr) {
-                return this.getStyle();
+            if (undefined === clr) {
+                return mofron.func.getColorObj(
+                           this.style('background')
+                       );
             }
-            if ('object' != (typeof _clr)) {
+            
+            if ((null === clr) || ('object' !== (typeof clr))) {
                 throw new Error('invalid parameter');
             }
-            this.style('background', _clr.getStyle());
+            this.style('background', clr.getStyle());
         } catch (e) {
             console.error(e.stack);
             throw e;
