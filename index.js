@@ -1,7 +1,12 @@
 /**
- * @file   Header.js
- * @brief  Header Component Class
+ * @file   index.js
  * @author simpart
+ */
+require('mofron-layout-horizon');
+
+/**
+ * @class comp.Header
+ * @brief header component class
  */
 mofron.comp.Header = class extends mofron.Component {
     
@@ -16,6 +21,7 @@ mofron.comp.Header = class extends mofron.Component {
             this.name("Header");
             
             this.m_height = 50;
+            
             if (null !== opt) {
                 this.option(opt);
             }
@@ -28,14 +34,15 @@ mofron.comp.Header = class extends mofron.Component {
     initDomConts (prm) {
         try {
             /* set header dom contents */
-            var hdr = new mofron.util.Vdom('div',this);
+            var hdr = new mofron.util.Dom('div',this);
             this.vdom().addChild(hdr);
-            this.vdom().addChild(new mofron.util.Vdom('div',this));
+            this.vdom().addChild(new mofron.util.Dom('div',this));
             this.target(hdr);
             
             /* set style */
             hdr.style('width'        , '100%');
             hdr.style('border-bottom', 'solid 1px lightgray');
+            hdr.style('position'     , 'fixed');
             
             /* set default height */
             this.height(this.height());
@@ -61,7 +68,7 @@ mofron.comp.Header = class extends mofron.Component {
     
     getEventTgt () {
         try {
-            return this.vdom();
+            return this.vdom().getChild(1);
         } catch (e) {
             console.error(e.stack);
             throw e;
