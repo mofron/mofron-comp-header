@@ -9,22 +9,17 @@ require('mofron-layout-horizon');
  * @brief header component class
  */
 mofron.comp.Header = class extends mofron.Component {
-    
     /**
      * initialize component
      *
      * @param prm (object) Component
      */
-    constructor (prm, opt) {
+    constructor (prm_opt) {
         try {
-            super(prm);
+            super();
             this.name("Header");
             
-            this.m_height = 50;
-            
-            if (null !== opt) {
-                this.option(opt);
-            }
+            this.prmOpt(prm_opt);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -34,24 +29,34 @@ mofron.comp.Header = class extends mofron.Component {
     initDomConts (prm) {
         try {
             /* set header dom contents */
-            var hdr = new mofron.util.Dom('div',this);
-            this.vdom().addChild(hdr);
-            this.vdom().addChild(new mofron.util.Dom('div',this));
-            this.target(hdr);
-            
-            /* set style */
+            var hdr = new mofron.Dom('div',this);
             hdr.style('width'        , '100%');
             hdr.style('border-bottom', 'solid 1px lightgray');
-            hdr.style('position'     , 'fixed');
+            hdr.style('float'        , 'left');
+            
+            var pad = new mofron.Dom('div',this);
+            pad.style('float'   , 'none');
+            pad.style('position', 'static');
+            
+            /* set dom contents */
+            this.vdom().child([
+                hdr,
+                pad
+            ]);
+            
+            this.target(hdr);
+            this.styleTgt(this.vdom());
             
             /* set default height */
-            this.height(this.height());
+            this.height(50);
+            this.bind(true);
+            
             
             /* child comp is added at horizon layout */
             this.addLayout(new mofron.layout.Horizon());
             
             /* set child component */
-            if ((null !== prm) && ('object' === typeof prm)) {
+            if (true === mofron.func.isInclude(prm, 'Component')) {
                 this.addChild(prm);
             }
             
@@ -66,15 +71,6 @@ mofron.comp.Header = class extends mofron.Component {
         }
     }
     
-    getEventTgt () {
-        try {
-            return this.vdom().getChild(1);
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
     /**
      * set/get header height
      *
@@ -83,20 +79,13 @@ mofron.comp.Header = class extends mofron.Component {
     height (val) {
         try {
             if (undefined === val) {
-                return this.m_height;
+                return this.style('height');
             }
             
             if (('number' !== typeof val) || (0 > val)) {
                 throw new Error('invalid parameter');
             }
-            
-            if (null === this.vdom()) {
-                this.m_height = val;
-                return;
-            }
-            
-            this.target().style('height', val + 'px');
-            this.vdom().getChild(1).style('height', val + 'px');
+            this.style('height', val + 'px');
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -125,4 +114,30 @@ mofron.comp.Header = class extends mofron.Component {
             throw e;
         }
     }
+    
+    bind (flg) {
+        try {
+            if (undefined === flg) {
+                /* getter */
+                if ('fixed' === this.style('position')) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            /* setter */
+            if ('boolean' !== typeof flg) {
+                throw new Error('invalid parameter');
+            }
+            if (true === flg) {
+                this.style('position', 'fixed', true);
+            } else {
+                this.style('position', null, true);
+            }
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
 }
+module.exports = mofron.comp.Header;
