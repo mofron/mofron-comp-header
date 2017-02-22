@@ -140,4 +140,5 @@ mofron.comp.Header = class extends mofron.Component {
         }
     }
 }
+mofron.comp.header = {};
 module.exports = mofron.comp.Header;
