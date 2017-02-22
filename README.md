@@ -1,4 +1,4 @@
-# mofron-parts-header
+# mofron-comp-header
 Base of Header Component for mofron
 
 # sample
