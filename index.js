@@ -100,7 +100,7 @@ mofron.comp.Header = class extends mofron.Component {
     color (clr) {
         try {
             if (undefined === clr) {
-                return mofron.func.getColorObj(
+                return mofron.func.getColor(
                            this.style('background')
                        );
             }
