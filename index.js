@@ -9,48 +9,35 @@ require('mofron-layout-horizon');
  * @brief header component class
  */
 mofron.comp.Header = class extends mofron.Component {
-    /**
-     * initialize component
-     *
-     * @param prm (object) Component
-     */
-    constructor (prm_opt) {
-        try {
-            super();
-            this.name("Header");
-            
-            this.prmOpt(prm_opt);
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
     
     initDomConts (prm) {
         try {
             /* set header dom contents */
-            var hdr = new mofron.Dom('div',this);
-            hdr.style('width'        , '100%');
-            hdr.style('border-bottom', 'solid 1px lightgray');
-            hdr.style('float'        , 'left');
-            
-            var pad = new mofron.Dom('div',this);
-            pad.style('float'   , 'none');
-            pad.style('position', 'static');
+            var hdr = new mofron.Dom({
+                tag       : 'div',
+                component : this,
+                style     : {
+                                'width'         : '100%',
+                                'border-bottom' : 'solid 1px lightgray',
+                        //        'float'         : 'left'
+                            }
+            });
+            var pad = new mofron.Dom({
+                tag       : 'div',
+                component : this,
+                style     : {
+                        //        'float'    : 'none',
+                                'position' : 'static'
+                            }
+            });
             
             /* set dom contents */
-            this.vdom().child([
-                hdr,
-                pad
-            ]);
-            
+            this.vdom().child([hdr, pad]);
             this.target(hdr);
-            this.styleTgt(this.vdom());
             
             /* set default height */
             this.height(50);
             this.bind(true);
-            
             
             /* child comp is added at horizon layout */
             this.addLayout(new mofron.layout.Horizon());
@@ -60,11 +47,18 @@ mofron.comp.Header = class extends mofron.Component {
                 this.addChild(prm);
             }
             
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    themeConts () {
+        try {
             /* set theme color */
-            var clr = this.theme().getColor(0);
-            if (null != clr) {
-                this.color(clr);
-            }
+            this.color(
+                (null === this.theme().getColor(0)) ? undefined : this.theme().getColor(0)
+            );
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -74,18 +68,20 @@ mofron.comp.Header = class extends mofron.Component {
     /**
      * set/get header height
      *
-     * @param hei : (int) height (px)
+     * @param hei : (int,string) height
      */
     height (val) {
         try {
             if (undefined === val) {
-                return this.style('height');
+                /* getter */
+                return mofron.func.getLength(this.style('height'));
             }
-            
-            if (('number' !== typeof val) || (0 > val)) {
-                throw new Error('invalid parameter');
-            }
-            this.style('height', val + 'px');
+            /* setter */
+            var set_hei = {
+                'height' : ('number' === typeof val) ? (val + 'px') : val
+            };
+            this.style(set_hei);
+            this.vdom().child()[1].style(set_hei);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -93,22 +89,21 @@ mofron.comp.Header = class extends mofron.Component {
     }
     
     /**
-     * set header background color
+     * header background color setter / getter
      *
      * clr : (object) color
      */
     color (clr) {
         try {
             if (undefined === clr) {
-                return mofron.func.getColor(
-                           this.style('background')
-                       );
+                /* getter */
+                return mofron.func.getColor(this.style('background'));
             }
-            
-            if ((null === clr) || ('object' !== (typeof clr))) {
+            /* setter */
+            if (false === mofron.func.isObject(clr, 'Color')) {
                 throw new Error('invalid parameter');
             }
-            this.style('background', clr.getStyle());
+            this.style({ 'background' : clr.getStyle() });
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -119,21 +114,16 @@ mofron.comp.Header = class extends mofron.Component {
         try {
             if (undefined === flg) {
                 /* getter */
-                if ('fixed' === this.style('position')) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return ('fixed' === this.style('position')) ? true : false;
             }
             /* setter */
             if ('boolean' !== typeof flg) {
                 throw new Error('invalid parameter');
             }
-            if (true === flg) {
-                this.style('position', 'fixed', true);
-            } else {
-                this.style('position', null, true);
-            }
+            this.style(
+                { 'position' : (true === flg) ? 'fixed' : null },
+                true
+            );
         } catch (e) {
             console.error(e.stack);
             throw e;
