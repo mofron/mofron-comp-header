@@ -12,6 +12,8 @@ mofron.comp.Header = class extends mofron.Component {
     
     initDomConts (prm) {
         try {
+            this.name('Header');
+            
             /* set header dom contents */
             var hdr = new mofron.Dom({
                 tag       : 'div',
