@@ -21,14 +21,14 @@ mofron.comp.Header = class extends mofron.Component {
                 style     : {
                                 'width'         : '100%',
                                 'border-bottom' : 'solid 1px lightgray',
-                        //        'float'         : 'left'
+                                'float'         : 'left'
                             }
             });
             var pad = new mofron.Dom({
                 tag       : 'div',
                 component : this,
                 style     : {
-                        //        'float'    : 'none',
+                                'float'    : 'none',
                                 'position' : 'static'
                             }
             });
@@ -122,10 +122,11 @@ mofron.comp.Header = class extends mofron.Component {
             if ('boolean' !== typeof flg) {
                 throw new Error('invalid parameter');
             }
-            this.style(
-                { 'position' : (true === flg) ? 'fixed' : null },
-                true
-            );
+            
+            if (true === flg) {
+                this.style({'position' : 'fixed'});
+            } else {
+                this.style({ 'position' : null }, true);
         } catch (e) {
             console.error(e.stack);
             throw e;
