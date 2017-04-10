@@ -59,7 +59,7 @@ mofron.comp.Header = class extends mofron.Component {
         try {
             /* set theme color */
             this.color(
-                (null === this.theme().getColor(0)) ? undefined : this.theme().getColor(0)
+                (null === this.theme().color(0)) ? undefined : this.theme().color(0)
             );
         } catch (e) {
             console.error(e.stack);
@@ -127,6 +127,7 @@ mofron.comp.Header = class extends mofron.Component {
                 this.style({'position' : 'fixed'});
             } else {
                 this.style({ 'position' : null }, true);
+            }
         } catch (e) {
             console.error(e.stack);
             throw e;
