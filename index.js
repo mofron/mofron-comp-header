@@ -124,7 +124,10 @@ mofron.comp.Header = class extends mofron.Component {
             }
             
             if (true === flg) {
-                this.style({position : 'fixed'});
+                this.style({
+                    position  : 'fixed',
+                    'z-index' : 999
+                });
             } else {
                 this.style(
                     {position : null},
