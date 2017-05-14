@@ -10,10 +10,19 @@ require('mofron-layout-horizon');
  */
 mofron.comp.Header = class extends mofron.Component {
     
+    constructor (prm_opt) {
+        try {
+            super();
+            this.name('Header');
+            this.prmOpt(prm_opt);
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
     initDomConts (prm) {
         try {
-            this.name('Header');
-            
             /* set header dom contents */
             var hdr = new mofron.Dom({
                 tag       : 'div',
