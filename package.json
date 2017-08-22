@@ -1,6 +1,6 @@
 {
   "name": "mofron-comp-header",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "description": "header component for mofron",
   "main": "index.js",
   "scripts": {
@@ -8,20 +8,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/simpart/mofron-comp-header.git"
+    "url": "git+https://github.com/mofron/mofron-comp-header.git"
   },
   "dependencies": {
     "mofron-layout-horizon"  : ""
   },
   "keywords": [
-    "mofron"
+    "front end"
   ],
   "author": "simparts",
   "license": "SEE LICENSE IN LICENSE",
   "bugs": {
-    "url": "https://github.com/simpart/mofron-comp-header/issues"
+    "url": "https://github.com/mofron/mofron-comp-header/issues"
   },
-  "homepage": "https://github.com/simpart/mofron-comp-header#readme",
+  "homepage": "https://github.com/mofron/mofron-comp-header#readme",
   "devDependencies": {
   }
 }

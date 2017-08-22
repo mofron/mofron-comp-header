@@ -2,7 +2,7 @@
  * @file   index.js
  * @author simpart
  */
-require('mofron-layout-horizon');
+let Horizon = require('mofron-layout-horizon');
 
 /**
  * @class comp.Header
@@ -10,11 +10,10 @@ require('mofron-layout-horizon');
  */
 mofron.comp.Header = class extends mofron.Component {
     
-    constructor (prm_opt) {
+    constructor (po) {
         try {
-            super();
+            super(po);
             this.name('Header');
-            this.prmOpt(prm_opt);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -51,25 +50,18 @@ mofron.comp.Header = class extends mofron.Component {
             this.bind(true);
             
             /* child comp is added at horizon layout */
-            this.addLayout(new mofron.layout.Horizon());
+            this.addLayout(new Horizon());
             
             /* set child component */
             if (true === mofron.func.isInclude(prm, 'Component')) {
                 this.addChild(prm);
             }
             
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    themeConts () {
-        try {
-            /* set theme color */
+            /* set color */
             this.color(
                 (null === this.theme().color(0)) ? undefined : this.theme().color(0)
             );
+            
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -139,7 +131,7 @@ mofron.comp.Header = class extends mofron.Component {
                 });
             } else {
                 this.style(
-                    {position : null},
+                    { position : null },
                     ('fixed' === this.style('position')) ? false : true
                 );
             }
