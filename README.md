@@ -1,21 +1,20 @@
 # mofron-comp-header
-Base of Header Component for mofron
+this is header component for mofron
+please see [here](https://github.com/mofron/mofron) about an overview of mofron
 
 # sample
-please see [here](https://github.com/simpart/mofron) about an overview of mofron
-
 ```javascript
-let Mof    = require('mofron');
+let mf     = require('mofron');
 let Text   = require('mofron-comp-text');
 let Header = require('mofron-comp-header');
 
-new Header({
-    param   : new Text({
-                         param : 'Header',
-                         size  : 45
-                     }),
-    height  : 70,
-    color   : new Mof.Color(173,216,230),
-    visible : true
+let hdr = new Header({
+    height   : 70,
+    color    : new mf.Color(173,216,230),
+    addChild : new Text({
+        param : 'Header',
+        size  : 45
+    })
 });
+hdr.visible(true);
 ```
