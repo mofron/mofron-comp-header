@@ -2,13 +2,14 @@
  * @file   index.js
  * @author simpart
  */
+let mf      = require('mofron');
 let Horizon = require('mofron-layout-horizon');
 
 /**
  * @class comp.Header
  * @brief header component class
  */
-mofron.comp.Header = class extends mofron.Component {
+mf.comp.Header = class extends mf.Component {
     
     constructor (po) {
         try {
@@ -22,27 +23,27 @@ mofron.comp.Header = class extends mofron.Component {
     
     initDomConts (prm) {
         try {
-            /* set header dom contents */
-            var hdr = new mofron.Dom({
+            /* init header dom contents */
+            var hdr = new mf.Dom({
                 tag       : 'div',
                 component : this,
                 style     : {
-                                'width'         : '100%',
-                                'border-bottom' : 'solid 1px lightgray',
-                                'float'         : 'left'
-                            }
+                    'width'         : '100%',
+                    'border-bottom' : 'solid 1px ' + new mf.Color(211,211,211).getStyle(),
+                    'float'         : 'left'
+                }
             });
-            var pad = new mofron.Dom({
-                tag       : 'div',
-                component : this,
-                style     : {
-                                'float'    : 'none',
-                                'position' : 'static'
-                            }
-            });
-            
-            /* set dom contents */
-            this.vdom().child([hdr, pad]);
+            this.adom().child([
+                hdr,
+                new mf.Dom({
+                    tag       : 'div',
+                    component : this,
+                    style     : {
+                        'float'    : 'none',
+                        'position' : 'static'
+                    }
+                })
+            ]);
             this.target(hdr);
             
             /* set default height */
@@ -53,14 +54,15 @@ mofron.comp.Header = class extends mofron.Component {
             this.addLayout(new Horizon());
             
             /* set child component */
-            if (true === mofron.func.isInclude(prm, 'Component')) {
+            if (true === mf.func.isInclude(prm, 'Component')) {
                 this.addChild(prm);
             }
             
             /* set color */
-            this.color(
-                (null === this.theme().color(0)) ? undefined : this.theme().color(0)
-            );
+            let thm_clr = this.theme().color(0);
+            if (null !== thm_clr) {
+                this.color(thm_clr);
+            }
             
         } catch (e) {
             console.error(e.stack);
@@ -77,14 +79,14 @@ mofron.comp.Header = class extends mofron.Component {
         try {
             if (undefined === val) {
                 /* getter */
-                return mofron.func.getLength(this.style('height'));
+                return mf.func.getLength(this.style('height'));
             }
             /* setter */
             var set_hei = {
                 'height' : ('number' === typeof val) ? (val + 'px') : val
             };
             this.style(set_hei);
-            this.vdom().child()[1].style(set_hei);
+            this.adom().child()[1].style(set_hei);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -100,10 +102,10 @@ mofron.comp.Header = class extends mofron.Component {
         try {
             if (undefined === clr) {
                 /* getter */
-                return mofron.func.getColor(this.style('background'));
+                return mf.func.getColor(this.style('background'));
             }
             /* setter */
-            if (false === mofron.func.isObject(clr, 'Color')) {
+            if (false === mf.func.isObject(clr, 'Color')) {
                 throw new Error('invalid parameter');
             }
             this.style({ 'background' : clr.getStyle() });
@@ -141,5 +143,5 @@ mofron.comp.Header = class extends mofron.Component {
         }
     }
 }
-mofron.comp.header = {};
-module.exports = mofron.comp.Header;
+mf.comp.header = {};
+module.exports = mf.comp.Header;
