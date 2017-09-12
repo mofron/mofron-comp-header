@@ -2,7 +2,7 @@
  * @file   index.js
  * @author simpart
  */
-let mf      = require('mofron');
+let mf = require('mofron');
 let Horizon = require('mofron-layout-horizon');
 
 /**
@@ -13,8 +13,9 @@ mf.comp.Header = class extends mf.Component {
     
     constructor (po) {
         try {
-            super(po);
+            super();
             this.name('Header');
+            this.prmOpt(po);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -23,27 +24,27 @@ mf.comp.Header = class extends mf.Component {
     
     initDomConts (prm) {
         try {
-            /* init header dom contents */
+            /* set header dom contents */
             var hdr = new mf.Dom({
                 tag       : 'div',
                 component : this,
                 style     : {
-                    'width'         : '100%',
-                    'border-bottom' : 'solid 1px ' + new mf.Color(211,211,211).getStyle(),
-                    'float'         : 'left'
-                }
+                                'width'         : '100%',
+                                'border-bottom' : 'solid 1px lightgray',
+                                'float'         : 'left'
+                            }
             });
-            this.adom().child([
-                hdr,
-                new mf.Dom({
-                    tag       : 'div',
-                    component : this,
-                    style     : {
-                        'float'    : 'none',
-                        'position' : 'static'
-                    }
-                })
-            ]);
+            var pad = new mf.Dom({
+                tag       : 'div',
+                component : this,
+                style     : {
+                                'float'    : 'none',
+                                'position' : 'static'
+                            }
+            });
+            
+            /* set dom contents */
+            this.adom().child([hdr, pad]);
             this.target(hdr);
             
             /* set default height */
@@ -58,12 +59,18 @@ mf.comp.Header = class extends mf.Component {
                 this.addChild(prm);
             }
             
-            /* set color */
-            let thm_clr = this.theme().color(0);
-            if (null !== thm_clr) {
-                this.color(thm_clr);
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    themeConts (thm) {
+        try {
+            if ( (null !== thm.color(0)) &&
+                 (null === this.color()) ) {
+                this.color(thm.color(0));
             }
-            
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -143,5 +150,5 @@ mf.comp.Header = class extends mf.Component {
         }
     }
 }
-mf.comp.header = {};
-module.exports = mf.comp.Header;
+mofron.comp.header = {};
+module.exports = mofron.comp.Header;
