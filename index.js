@@ -29,7 +29,6 @@ mf.comp.Header = class extends mf.Component {
                 tag       : 'div',
                 component : this,
                 style     : {
-                                'width'         : '100%',
                                 'border-bottom' : 'solid 1px lightgray',
                                 'float'         : 'left'
                             }
@@ -47,8 +46,8 @@ mf.comp.Header = class extends mf.Component {
             this.adom().child([hdr, pad]);
             this.target(hdr);
             
-            /* set default height */
-            this.height(50);
+            /* set default size */
+            this.size('100%', 50);
             this.bind(true);
             
             /* child comp is added at horizon layout */
@@ -84,16 +83,13 @@ mf.comp.Header = class extends mf.Component {
      */
     height (val) {
         try {
-            if (undefined === val) {
-                /* getter */
-                return mf.func.getLength(this.style('height'));
+            let ret = super.height(val);
+            if (undefined !== ret) {
+                return ret;
             }
-            /* setter */
-            var set_hei = {
-                'height' : ('number' === typeof val) ? (val + 'px') : val
-            };
-            this.style(set_hei);
-            this.adom().child()[1].style(set_hei);
+            this.adom().child()[1].style({
+                'height' : ('number' === typeof val) ? val+'px' : px
+            });
         } catch (e) {
             console.error(e.stack);
             throw e;

@@ -1,6 +1,6 @@
 {
   "name": "mofron-comp-header",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "header component for mofron",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "mofron-layout-horizon"  : ""
   },
   "keywords": [
-    "front end"
+    "front-end"
   ],
   "author": "simparts",
   "license": "SEE LICENSE IN LICENSE",
