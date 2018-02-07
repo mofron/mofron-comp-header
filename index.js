@@ -1,45 +1,33 @@
 /**
  * @file   index.js
+ * @brief  header component for mofron
  * @author simpart
  */
 let mf = require('mofron');
 let Horizon = require('mofron-layout-horizon');
 
 /**
- * @class comp.Header
+ * @class mofron.comp.Header
  * @brief header component class
  */
 mf.comp.Header = class extends mf.Component {
     
-    constructor (po) {
-        try {
-            super();
-            this.name('Header');
-            this.prmOpt(po);
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
     initDomConts (prm) {
         try {
+            this.name('Header');
+            
             /* set header dom contents */
             var hdr = new mf.Dom({
                 tag       : 'div',
                 component : this,
-                style     : {
-                                'border-bottom' : 'solid 1px lightgray',
-                                'float'         : 'left'
-                            }
+                style     : { 'border-bottom' : 'solid 1px lightgray',
+                              'float'         : 'left' }
             });
             var pad = new mf.Dom({
                 tag       : 'div',
                 component : this,
-                style     : {
-                                'float'    : 'none',
-                                'position' : 'static'
-                            }
+                style     : { 'float'    : 'none',
+                              'position' : 'static' }
             });
             
             /* set dom contents */
@@ -146,5 +134,5 @@ mf.comp.Header = class extends mf.Component {
         }
     }
 }
-mofron.comp.header = {};
 module.exports = mofron.comp.Header;
+/* end of file */
