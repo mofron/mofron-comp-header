@@ -11,10 +11,19 @@ let Horizon = require('mofron-layout-horizon');
  * @brief header component class
  */
 mf.comp.Header = class extends mf.Component {
+    constructor (po) {
+        try {
+            super();
+            this.name('Header');
+            this.prmOpt(po);
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
     
     initDomConts (prm) {
         try {
-            this.name('Header');
             
             /* set header dom contents */
             var hdr = new mf.Dom({
