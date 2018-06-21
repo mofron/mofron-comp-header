@@ -80,12 +80,12 @@ mf.comp.Header = class extends mf.Component {
      */
     height (val) {
         try {
-            let ret = super.height(val);
+            let ret = super.height(('number' === typeof val) ? (val-1)+'px' : val);
             if (undefined !== ret) {
                 return ret;
             }
             this.adom().child()[1].style({
-                'height' : ('number' === typeof val) ? val+'px' : px
+                'height' : ('number' === typeof val) ? val+'px' : val
             });
         } catch (e) {
             console.error(e.stack);
