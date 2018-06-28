@@ -1,6 +1,6 @@
 {
   "name": "mofron-comp-header",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "header component for mofron",
   "main": "index.js",
   "scripts": {

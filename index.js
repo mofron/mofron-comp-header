@@ -61,6 +61,15 @@ mf.comp.Header = class extends mf.Component {
         }
     }
     
+    responsive (prm) {
+        try {
+            this.height(150);
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
     themeConts (thm) {
         try {
             if ( (null !== thm.color(0)) &&
