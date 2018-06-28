@@ -45,6 +45,8 @@ mf.comp.Header = class extends mf.Component {
             
             /* set default size */
             this.size('100%', 50);
+            this.responsive({ 'height' : 50 });
+            
             this.bind(true);
             
             /* child comp is added at horizon layout */
@@ -55,15 +57,6 @@ mf.comp.Header = class extends mf.Component {
                 this.addChild(prm);
             }
             
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    responsive (prm) {
-        try {
-            this.height(150);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -93,8 +86,9 @@ mf.comp.Header = class extends mf.Component {
             if (undefined !== ret) {
                 return ret;
             }
+            let hei = this.height();
             this.adom().child()[1].style({
-                'height' : ('number' === typeof val) ? val+'px' : val
+                'height' : ('number' === typeof hei) ? hei+'px' : hei
             });
         } catch (e) {
             console.error(e.stack);
