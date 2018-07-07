@@ -24,7 +24,6 @@ mf.comp.Header = class extends mf.Component {
     
     initDomConts (prm) {
         try {
-            
             /* set header dom contents */
             var hdr = new mf.Dom({
                 tag       : 'div',
@@ -45,18 +44,15 @@ mf.comp.Header = class extends mf.Component {
             
             /* set default size */
             this.size('100%', 50);
-            this.responsive({ 'height' : 50 });
-            
             this.bind(true);
             
             /* child comp is added at horizon layout */
             this.addLayout(new Horizon());
             
             /* set child component */
-            if (true === mf.func.isInclude(prm, 'Component')) {
+            if (undefined !== prm) {
                 this.addChild(prm);
             }
-            
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -84,11 +80,10 @@ mf.comp.Header = class extends mf.Component {
         try {
             let ret = super.height(('number' === typeof val) ? (val-1)+'px' : val);
             if (undefined !== ret) {
-                return ret;
+                return ret+1;
             }
-            let hei = this.height();
             this.adom().child()[1].style({
-                'height' : ('number' === typeof hei) ? hei+'px' : hei
+                'height' : ('number' === typeof val) ? val+'px' : val
             });
         } catch (e) {
             console.error(e.stack);
