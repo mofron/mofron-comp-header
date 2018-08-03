@@ -15,6 +15,7 @@ mf.comp.Header = class extends mf.Component {
         try {
             super();
             this.name('Header');
+            this.prmMap('addChild');
             this.prmOpt(po);
         } catch (e) {
             console.error(e.stack);
@@ -22,16 +23,17 @@ mf.comp.Header = class extends mf.Component {
         }
     }
     
-    initDomConts (prm) {
+    initDomConts () {
         try {
             /* set header dom contents */
-            var hdr = new mf.Dom({
+            let hdr = new mf.Dom({
                 tag       : 'div',
                 component : this,
-                style     : { 'border-bottom' : 'solid 1px lightgray',
-                              'float'         : 'left' }
+                style     : { 'border-bottom-style' : 'solid',
+                              'border-bottom-width' : '1px',
+                              'float' : 'left' }
             });
-            var pad = new mf.Dom({
+            let pad = new mf.Dom({
                 tag       : 'div',
                 component : this,
                 style     : { 'float'    : 'none',
@@ -42,29 +44,14 @@ mf.comp.Header = class extends mf.Component {
             this.adom().child([hdr, pad]);
             this.target(hdr);
             
-            /* set default size */
+            /* set default config */
             this.size('100%', 50);
             this.bind(true);
+            this.mainColor(new mf.Color(211,211,211));
             
             /* child comp is added at horizon layout */
             this.addLayout(new Horizon());
             
-            /* set child component */
-            if (undefined !== prm) {
-                this.addChild(prm);
-            }
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    themeConts (thm) {
-        try {
-            if ( (null !== thm.color(0)) &&
-                 (null === this.color()) ) {
-                this.color(thm.color(0));
-            }
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -85,28 +72,6 @@ mf.comp.Header = class extends mf.Component {
             this.adom().child()[1].style({
                 'height' : ('number' === typeof val) ? val+'px' : val
             });
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    /**
-     * header background color setter / getter
-     *
-     * clr : (object) color
-     */
-    color (clr) {
-        try {
-            if (undefined === clr) {
-                /* getter */
-                return mf.func.getColor(this.style('background'));
-            }
-            /* setter */
-            if (false === mf.func.isObject(clr, 'Color')) {
-                throw new Error('invalid parameter');
-            }
-            this.style({ 'background' : clr.getStyle() });
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -135,6 +100,25 @@ mf.comp.Header = class extends mf.Component {
                     ('fixed' === this.style('position')) ? false : true
                 );
             }
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    mainColor (prm) {
+        try {
+            if (undefined === prm) {
+                /* getter */
+                return mf.func.getColor(this.style('border-bottom-color'));
+            }
+            /* setter */
+            if (true !== mf.func.isObject(prm, 'Color')) {
+                throw new Error('invalid parameter');
+            }
+            this.style({
+                'border-bottom-color' : prm.getStyle()
+            });
         } catch (e) {
             console.error(e.stack);
             throw e;
