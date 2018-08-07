@@ -15,7 +15,7 @@ mf.comp.Header = class extends mf.Component {
         try {
             super();
             this.name('Header');
-            this.prmMap('addChild');
+            this.prmMap('child');
             this.prmOpt(po);
         } catch (e) {
             console.error(e.stack);
@@ -45,7 +45,8 @@ mf.comp.Header = class extends mf.Component {
             this.target(hdr);
             
             /* set default config */
-            this.size('100%', 50);
+            this.width(100, '%');
+            this.height(5);
             this.bind(true);
             this.mainColor(new mf.Color(211,211,211));
             
