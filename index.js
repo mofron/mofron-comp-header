@@ -46,7 +46,7 @@ mf.comp.Header = class extends mf.Component {
             
             /* set default config */
             this.width(100, '%');
-            this.height(5);
+            this.height(0.5);
             this.bind(true);
             this.mainColor(new mf.Color(211,211,211));
             
