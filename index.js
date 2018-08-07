@@ -64,15 +64,15 @@ mf.comp.Header = class extends mf.Component {
      *
      * @param hei : (int,string) height
      */
-    height (val) {
+    height (prm, st) {
         try {
-            let ret = super.height(('number' === typeof val) ? (val-1)+'px' : val);
-            if (undefined !== ret) {
-                return ret+1;
+            let ret = super.height(prm, st);
+            if (undefined === ret) {
+                this.adom().child()[1].style({
+                    'height' : prm + (undefined !== st) ? st : this.sizeType()
+                });
             }
-            this.adom().child()[1].style({
-                'height' : ('number' === typeof val) ? val+'px' : val
-            });
+            return ret;
         } catch (e) {
             console.error(e.stack);
             throw e;
