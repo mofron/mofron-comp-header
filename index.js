@@ -68,8 +68,9 @@ mf.comp.Header = class extends mf.Component {
         try {
             let ret = super.height(prm, st);
             if (undefined === ret) {
+                let stype = (undefined !== st) ? st : this.sizeType();
                 this.adom().child()[1].style({
-                    'height' : prm + (undefined !== st) ? st : this.sizeType()
+                    'height' : prm + stype
                 });
             }
             return ret;
