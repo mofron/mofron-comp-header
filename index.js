@@ -15,6 +15,7 @@ mf.comp.Header = class extends mf.Component {
         try {
             super();
             this.name('Header');
+            this.sizeType('rem');
             this.prmMap('child');
             this.prmOpt(po);
         } catch (e) {
@@ -45,13 +46,13 @@ mf.comp.Header = class extends mf.Component {
             this.target(hdr);
             
             /* set default config */
-            this.width(100, '%');
+            this.width('100%');
             this.height(0.5);
             this.bind(true);
             this.mainColor(new mf.Color(211,211,211));
             
             /* child comp is added at horizon layout */
-            this.addLayout(new Horizon());
+            this.layout([new Horizon()]);
             
         } catch (e) {
             console.error(e.stack);
@@ -68,9 +69,8 @@ mf.comp.Header = class extends mf.Component {
         try {
             let ret = super.height(prm, st);
             if (undefined === ret) {
-                let stype = (undefined !== st) ? st : this.sizeType();
                 this.adom().child()[1].style({
-                    'height' : prm + stype
+                    'height' : (prm + '') + this.sizeType()
                 });
             }
             return ret;
