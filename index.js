@@ -3,9 +3,8 @@
  * @brief  header component for mofron
  * @author simpart
  */
-let mf = require('mofron');
-let Horizon = require('mofron-layout-horizon');
-
+const mf      = require('mofron');
+const Horizon = require('mofron-layout-horizon');
 /**
  * @class mofron.comp.Header
  * @brief header component class
@@ -15,7 +14,6 @@ mf.comp.Header = class extends mf.Component {
         try {
             super();
             this.name('Header');
-            this.sizeType('rem');
             this.prmMap('child');
             this.prmOpt(po);
         } catch (e) {
@@ -47,7 +45,7 @@ mf.comp.Header = class extends mf.Component {
             
             /* set default config */
             this.width('100%');
-            this.height(0.5);
+            this.height('0.5rem');
             this.bind(true);
             this.mainColor(new mf.Color(211,211,211));
             
@@ -63,14 +61,13 @@ mf.comp.Header = class extends mf.Component {
     /**
      * set/get header height
      *
-     * @param hei : (int,string) height
      */
-    height (prm, st) {
+    height (prm) {
         try {
-            let ret = super.height(prm, st);
+            let ret = super.height(prm);
             if (undefined === ret) {
                 this.adom().child()[1].style({
-                    'height' : (prm + '') + this.sizeType()
+                    'height' : super.height().value()
                 });
             }
             return ret;
@@ -118,9 +115,7 @@ mf.comp.Header = class extends mf.Component {
             if (true !== mf.func.isObject(prm, 'Color')) {
                 throw new Error('invalid parameter');
             }
-            this.style({
-                'border-bottom-color' : prm.getStyle()
-            });
+            this.style({ 'border-bottom-color' : prm.getStyle() });
         } catch (e) {
             console.error(e.stack);
             throw e;
