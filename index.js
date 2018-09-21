@@ -5,6 +5,7 @@
  */
 const mf      = require('mofron');
 const Horizon = require('mofron-layout-horizon');
+const Border  = require('mofron-effect-border');
 /**
  * @class mofron.comp.Header
  * @brief header component class
@@ -24,34 +25,17 @@ mf.comp.Header = class extends mf.Component {
     
     initDomConts () {
         try {
-            /* set header dom contents */
-            let hdr = new mf.Dom({
-                tag       : 'div',
-                component : this,
-                style     : { 'border-bottom-style' : 'solid',
-                              'border-bottom-width' : '1px',
-                              'float' : 'left' }
-            });
-            let pad = new mf.Dom({
-                tag       : 'div',
-                component : this,
-                style     : { 'float'    : 'none',
-                              'position' : 'static' }
-            });
+            super.initDomConts();
+            let conts = new mf.Component({});
+            this.addChild(conts);
+            this.target(conts.target());
             
-            /* set dom contents */
-            this.adom().child([hdr, pad]);
-            this.target(hdr);
+            this.layout([ new Horizon() ]);
+            this.effect([ new Border({ type  : 'bottom' }) ]);
             
-            /* set default config */
-            this.width('100%');
-            this.height('0.5rem');
+            this.size('100%', '0.5rem');
             this.bind(true);
             this.mainColor(new mf.Color(211,211,211));
-            
-            /* child comp is added at horizon layout */
-            this.layout([new Horizon()]);
-            
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -66,9 +50,8 @@ mf.comp.Header = class extends mf.Component {
         try {
             let ret = super.height(prm);
             if (undefined === ret) {
-                this.adom().child()[1].style({
-                    'height' : super.height().toString()
-                });
+                /* setter */
+                this.adom().child()[0].style({ 'height' : prm });
             }
             return ret;
         } catch (e) {
@@ -107,20 +90,13 @@ mf.comp.Header = class extends mf.Component {
     
     mainColor (prm) {
         try {
-            if (undefined === prm) {
-                /* getter */
-                return mf.func.getColor(this.style('border-bottom-color'));
-            }
-            /* setter */
-            if (true !== mf.func.isObject(prm, 'Color')) {
-                throw new Error('invalid parameter');
-            }
-            this.style({ 'border-bottom-color' : prm.getStyle() });
+            let bdr = this.getConfig('effect', 'Border');
+            return (null === bdr) ? null : bdr.color(prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
 }
-module.exports = mofron.comp.Header;
+module.exports = mf.comp.Header;
 /* end of file */

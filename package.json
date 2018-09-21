@@ -1,6 +1,6 @@
 {
   "name": "mofron-comp-header",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "header component for mofron",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,8 @@
     "url": "git+https://github.com/mofron/mofron-comp-header.git"
   },
   "dependencies": {
-    "mofron-layout-horizon"  : ""
+    "mofron-layout-horizon" : "",
+    "mofron-effect-border" : ""
   },
   "keywords": [
     "front-end"
