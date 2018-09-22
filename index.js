@@ -35,7 +35,7 @@ mf.comp.Header = class extends mf.Component {
             
             this.size('100%', '0.5rem');
             this.bind(true);
-            this.mainColor(new mf.Color(211,211,211));
+            this.mainColor([211,211,211]);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -48,12 +48,7 @@ mf.comp.Header = class extends mf.Component {
      */
     height (prm) {
         try {
-            let ret = super.height(prm);
-            if (undefined === ret) {
-                /* setter */
-                this.adom().child()[0].style({ 'height' : prm });
-            }
-            return ret;
+            return (undefined === super.height(prm)) ? this.getDomChild()[0].style({ 'height' : prm }) : super.height();
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -90,8 +85,7 @@ mf.comp.Header = class extends mf.Component {
     
     mainColor (prm) {
         try {
-            let bdr = this.getConfig('effect', 'Border');
-            return (null === bdr) ? null : bdr.color(prm);
+            return (undefined === prm) ? this.style('border-bottom-color') : this.configOpt('effect', 'Border', { color : prm });
         } catch (e) {
             console.error(e.stack);
             throw e;
