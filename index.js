@@ -23,15 +23,19 @@ mf.comp.Header = class extends mf.Component {
         }
     }
     
+    /**
+     * initialize dom contents
+     * 
+     * @note private method
+     */
     initDomConts () {
         try {
             super.initDomConts();
-            let conts = new mf.Component({});
-            this.addChild(conts);
-            this.target(conts.target());
+            this.addChild(new mf.Component({}));
+            this.target(this.child()[0].target());
             
-            this.layout([ new Horizon() ]);
-            this.effect([ new Border({ type  : 'bottom' }) ]);
+            this.layout(new Horizon());
+            this.effect(new Border({ type : 'bottom' }));
             
             this.size('100%', '0.5rem');
             this.bind(true);
@@ -43,18 +47,37 @@ mf.comp.Header = class extends mf.Component {
     }
     
     /**
-     * set/get header height
-     *
+     * setter/getter for header height
+     * 
+     * @param val (string) css value of height
+     * @param val (undefined) call as getter
+     * @return (string) height value
+     * @param (null) not set yet
      */
-    height (prm) {
+    height (val) {
         try {
-            return (undefined === super.height(prm)) ? this.getDomChild()[0].style({ 'height' : prm }) : super.height();
+            let ret = super.height(val);
+            if (undefined !== val) {
+                this.getDomChild()[0].style({
+                    height : val
+                });
+            }
+            return ret;
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
+    /**
+     * setter/getter for bind header 
+     * binding displays header even if user scrolls.
+     * 
+     * @param flg (boolean) binding status
+     * @param flg (undefined) call as getter
+     * @return (true) binding is enabled (default)
+     * @return (false) binding is disabled
+     */
     bind (flg) {
         try {
             if (undefined === flg) {
@@ -83,10 +106,14 @@ mf.comp.Header = class extends mf.Component {
         }
     }
     
-    mainColor (prm) {
-        try {
-            return (undefined === prm) ? this.style('border-bottom-color') : this.configOpt('effect', 'Border', { color : prm });
-        } catch (e) {
+    /**
+     * setter/getter for bottom border color
+     *
+     * @param clr (string) 
+     *
+     */
+    mainColor (clr) {
+        try { return this.effect('Border').color(clr); } catch (e) {
             console.error(e.stack);
             throw e;
         }
