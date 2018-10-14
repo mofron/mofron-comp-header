@@ -1,5 +1,5 @@
 /**
- * @file   index.js
+ * @file   mofron-comp-header/index.js
  * @brief  header component for mofron
  * @author simpart
  */
