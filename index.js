@@ -113,7 +113,10 @@ mf.comp.Header = class extends mf.Component {
      *
      */
     mainColor (clr) {
-        try { return this.effect('Border').color(clr); } catch (e) {
+        try {
+            let ret = this.effect('Border').color(clr);
+            return (undefined !== ret) ? ret[0] : ret;
+        } catch (e) {
             console.error(e.stack);
             throw e;
         }
