@@ -32,10 +32,11 @@ mf.comp.Header = class extends mf.Component {
         try {
             super.initDomConts();
             this.addChild(new mf.Component({}));
+            this.wrap(this.target());
             this.target(this.child()[0].target());
             
             this.layout(new Horizon());
-            this.effect(new Border({ type : 'bottom' }));
+            this.effect(new Border({ type : 'bottom', tag: this.name() + 'init' }));
             
             this.size('100%', '0.5rem');
             this.bind(true);
@@ -44,6 +45,13 @@ mf.comp.Header = class extends mf.Component {
             console.error(e.stack);
             throw e;
         }
+    }
+    
+    wrap (prm) {
+       try { return this.member('wrap', ['Base', 'Dom'], prm); } catch (e) {
+           console.error(e.stack);
+           throw e;
+       }
     }
     
     /**
@@ -58,9 +66,7 @@ mf.comp.Header = class extends mf.Component {
         try {
             let ret = super.height(val);
             if (undefined !== val) {
-                this.getDomChild()[0].style({
-                    height : val
-                });
+                this.wrap().style({ height : val });
             }
             return ret;
         } catch (e) {
@@ -91,8 +97,8 @@ mf.comp.Header = class extends mf.Component {
             
             if (true === flg) {
                 this.style({
-                    position  : 'fixed',
-                    'z-index' : 999
+                    'position' : 'fixed',
+                    'z-index'  : 999
                 });
             } else {
                 this.style(
@@ -114,7 +120,7 @@ mf.comp.Header = class extends mf.Component {
      */
     mainColor (clr) {
         try {
-            let ret = this.effect('Border').color(clr);
+            let ret = this.effect(['Border', this.name() + 'init']).color(clr);
             return (undefined !== ret) ? ret[0] : ret;
         } catch (e) {
             console.error(e.stack);
