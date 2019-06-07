@@ -6,16 +6,20 @@
 const mf      = require('mofron');
 const Horizon = require('mofron-layout-horizon');
 const Border  = require('mofron-effect-border');
-/**
- * @class mofron.comp.Header
- * @brief header component class
- */
+
+let mod_name = "Header";
 mf.comp.Header = class extends mf.Component {
+    
+    /**
+     * constructor
+     * 
+     * @param (string) 'child' function parameter
+     * @type private
+     */
     constructor (po) {
         try {
             super();
-            this.name('Header');
-            this.prmMap('child');
+            this.name(mod_name);
             this.prmOpt(po);
         } catch (e) {
             console.error(e.stack);
@@ -26,19 +30,19 @@ mf.comp.Header = class extends mf.Component {
     /**
      * initialize dom contents
      * 
-     * @note private method
+     * @type private
      */
     initDomConts () {
         try {
             super.initDomConts();
-            this.addChild(new mf.Component({}));
+            this.addChild(new mf.Component());
             this.wrap(this.target());
             this.target(this.child()[0].target());
             
             this.layout(new Horizon());
-            this.effect(new Border({ type : 'bottom', tag: this.name() + 'init' }));
+            this.effect(new Border({ type : "bottom", tag: mod_name }));
             
-            this.size('100%', '0.5rem');
+            this.size("100%", "0.5rem");
             this.bind(true);
             this.mainColor([211,211,211]);
         } catch (e) {
@@ -47,6 +51,11 @@ mf.comp.Header = class extends mf.Component {
         }
     }
     
+    /**
+     * contents wrapper
+     *
+     * @type private
+     */
     wrap (prm) {
        try { return this.member('wrap', ['Base', 'Dom'], prm); } catch (e) {
            console.error(e.stack);
@@ -55,12 +64,11 @@ mf.comp.Header = class extends mf.Component {
     }
     
     /**
-     * setter/getter for header height
+     * header height
      * 
-     * @param val (string) css value of height
-     * @param val (undefined) call as getter
-     * @return (string) height value
-     * @param (null) not set yet
+     * @param (string (size)) header height (default is "0.5rem")
+     * @return (string (size)) header height
+     * @type tag parameter
      */
     height (val) {
         try {
@@ -76,13 +84,13 @@ mf.comp.Header = class extends mf.Component {
     }
     
     /**
-     * setter/getter for bind header 
+     * binding header 
      * binding displays header even if user scrolls.
      * 
-     * @param flg (boolean) binding status
-     * @param flg (undefined) call as getter
-     * @return (true) binding is enabled (default)
-     * @return (false) binding is disabled
+     * @param (boolean) true: header position is fixed. display header even if user scrolls. (default)
+     *                  false: header position is not fixed.
+     * @return (boolean) binding config
+     * @type tag parameter
      */
     bind (flg) {
         try {
@@ -96,10 +104,7 @@ mf.comp.Header = class extends mf.Component {
             }
             
             if (true === flg) {
-                this.style({
-                    'position' : 'fixed',
-                    'z-index'  : 999
-                });
+                this.style({ 'position': 'fixed', 'z-index': 999 });
             } else {
                 this.style(
                     { position : null },
@@ -113,14 +118,15 @@ mf.comp.Header = class extends mf.Component {
     }
     
     /**
-     * setter/getter for bottom border color
+     * border bottom color
      *
-     * @param clr (string) 
-     *
+     * @param (string (color)/[number, number, number]) border bottom  color (name, hex) / r,g,b
+     * @return (string (color)) border bottom  color
+     * @type tag parameter
      */
     mainColor (clr) {
         try {
-            let ret = this.effect(['Border', this.name() + 'init']).color(clr);
+            let ret = this.effect(['Border', mod_name]).color(clr);
             return (undefined !== ret) ? ret[0] : ret;
         } catch (e) {
             console.error(e.stack);
