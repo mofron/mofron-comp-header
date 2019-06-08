@@ -1,6 +1,9 @@
 /**
  * @file   mofron-comp-header/index.js
  * @brief  header component for mofron
+ *         This component for placing at the top of the page etc. and displaying the site title etc.
+ *         A header's child components are placed horizontally since header has a horizon layout.
+ * @attention it maybe needs a 'false' config at bind parameter that used as a child component.
  * @author simpart
  */
 const mf      = require('mofron');
@@ -85,7 +88,6 @@ mf.comp.Header = class extends mf.Component {
     
     /**
      * binding header 
-     * binding displays header even if user scrolls.
      * 
      * @param (boolean) true: header position is fixed. display header even if user scrolls. (default)
      *                  false: header position is not fixed.
