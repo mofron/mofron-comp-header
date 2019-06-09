@@ -2,7 +2,7 @@
  * @file   mofron-comp-header/index.js
  * @brief  header component for mofron
  *         This component for placing at the top of the page etc. and displaying the site title etc.
- *         A header's child components are placed horizontally since header has a horizon layout.
+ * @feature A header's child components are placed horizontally since header has a horizon layout.
  * @attention it maybe needs a 'false' config at bind parameter that used as a child component.
  * @author simpart
  */
