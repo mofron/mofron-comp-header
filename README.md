@@ -1,10 +1,11 @@
 # mofron-comp-header
-A header component for [mofron](https://mofron.github.io/mofron/).
-
 [mofron](https://mofron.github.io/mofron/) is module based frontend framework.
+
+A header component for [mofron](https://mofron.github.io/mofron/).
 
 This component for placing at the top of the page etc. and displaying the site title etc.
 
+## feature
 A header's child components are placed horizontally since header has a horizon layout.
 
 
@@ -30,7 +31,8 @@ npm install mofron mofron-comp-header
 
 # Parameter
 
-| Parameter Name     | Type                                          | Simple Param |    Description                   |
-|:-------------------|:----------------------------------------------|:------------:|:---------------------------------|
-| bind               | boolean                                        |             | true: header position is fixed. display header even if user scrolls. (default)<br>false: header position is not fixed.    |
-| mainColor          | string (color) / [number, number, number]       |              | border bottom  color (name, hex) / r,g,b |
+|Simple<br>Param| Parameter Name     | Type                                          |    Description                   |
+|:-------------:|:-------------------|:----------------------------------------------|:---------------------------------|
+|               | bind               | boolean                                       | true:<br>header position is fixed. display header even if user scrolls. (default) |
+|               |                    |                                               | false: header position is not fixed.        |
+|               | mainColor          | string/array (color)                          | border bottom color (name,hex / [r,g,b,(a)])  |
