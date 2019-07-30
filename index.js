@@ -8,7 +8,6 @@
  */
 const mf      = require('mofron');
 const Horizon = require('mofron-layout-horizon');
-const Border  = require('mofron-effect-border');
 
 let mod_name = "Header";
 mf.comp.Header = class extends mf.Component {
@@ -43,7 +42,11 @@ mf.comp.Header = class extends mf.Component {
             this.target(this.child()[0].target());
             
             this.layout(new Horizon());
-            this.effect(new Border({ type : "bottom", tag: mod_name }));
+            /* border config */
+            this.style({
+                "border-bottom-style" : "solid",
+                "border-bottom-width" : "0.01rem"
+            });
             
             this.size("100%", "0.5rem");
             this.bind(true);
@@ -126,10 +129,14 @@ mf.comp.Header = class extends mf.Component {
      * @return (string (color)) border bottom  color
      * @type tag parameter
      */
-    mainColor (clr) {
+    mainColor (prm) {
         try {
-            let ret = this.effect(['Border', mod_name]).color(clr);
-            return (undefined !== ret) ? ret[0] : ret;
+            if (undefined === prm) {
+                /* getter */
+                return this.style("border-bottom-color");
+            }
+            /* setter */
+            mf.func.cmpColor(this, "border-bottom-color", prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
