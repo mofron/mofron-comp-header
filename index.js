@@ -59,7 +59,8 @@ mf.comp.Header = class extends mf.Component {
     
     /**
      * contents wrapper
-     *
+     * 
+     * @param (mf.Dom) dom object
      * @type private
      */
     wrap (prm) {
@@ -73,12 +74,13 @@ mf.comp.Header = class extends mf.Component {
      * header height
      * 
      * @param (string (size)) header height (default is "0.5rem")
+     * @param (option) style option
      * @return (string (size)) header height
      * @type tag parameter
      */
-    height (val) {
+    height (val, opt) {
         try {
-            let ret = super.height(val);
+            let ret = super.height(val,opt);
             if (undefined !== val) {
                 this.wrap().style({ height : val });
             }
@@ -125,18 +127,20 @@ mf.comp.Header = class extends mf.Component {
     /**
      * border bottom color
      *
-     * @param (string (color)/[number, number, number]) border bottom  color (name, hex) / r,g,b
-     * @return (string (color)) border bottom  color
-     * @type tag parameter
+     * @param (mixed (color)) string: border bottom color name, #hex
+     *                        array: [red, green, blue, (alpha)]
+     * @param (option) stye option
+     * @return (string) border bottom color
+     * @type parameter
      */
-    mainColor (prm) {
+    mainColor (prm, opt) {
         try {
             if (undefined === prm) {
                 /* getter */
                 return this.style("border-bottom-color");
             }
             /* setter */
-            mf.func.cmpColor(this, "border-bottom-color", prm);
+            mf.func.cmpColor(this, "border-bottom-color", [prm,opt]);
         } catch (e) {
             console.error(e.stack);
             throw e;

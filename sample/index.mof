@@ -1,0 +1,6 @@
+<require>
+    <tag module="mofron-comp-header">Header</tag>
+</require>
+
+<Header baseColor="#f0e6fa">
+</Header>
