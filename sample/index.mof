@@ -1,6 +1,9 @@
 <require>
-    <tag module="mofron-comp-header">Header</tag>
+    <tag load="mofron-comp-header">Header</tag>
+    <tag load="mofron-comp-text">Text</tag>
 </require>
 
-<Header baseColor="#f0e6fa">
+<Header color2="#f0e6fa">
+    <Text>Header</Text>
+    <Text>Component</Text>
 </Header>

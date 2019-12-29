@@ -1,28 +1,32 @@
 /**
- * @file   mofron-comp-header/index.js
- * @brief  header component for mofron
- *         This component for placing at the top of the page etc. and displaying the site title etc.
+ * @file  mofron-comp-header/index.js
+ * @brief header component for mofron
+ *        ex. it is for placing at the top of the page and displaying the site title etc.
  * @feature A header's child components are placed horizontally since header has a horizon layout.
- * @attention it maybe needs a 'false' config at bind parameter that used as a child component.
- * @author simpart
+ * @attention it needs false value at bind parameter when you don't use in page top position.
+ * @license MIT
  */
-const mf      = require('mofron');
 const Horizon = require('mofron-layout-horizon');
+const cmputl  = mofron.util.component;
 
-let mod_name = "Header";
-mf.comp.Header = class extends mf.Component {
-    
+module.exports = class extends mofron.class.Component {
     /**
      * constructor
      * 
-     * @param (string) 'child' function parameter
+     * @param (mixed) child parameter
+     *                key-value: component config
      * @type private
      */
-    constructor (po) {
+    constructor (p1) {
         try {
             super();
-            this.name(mod_name);
-            this.prmOpt(po);
+	    /* init config */
+            this.name("Header");
+	    this.confmng().add("wrap", { type: "Dom" });
+            
+            if (0 < arguments.length) {
+                this.config(p1);
+            }
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -37,9 +41,9 @@ mf.comp.Header = class extends mf.Component {
     initDomConts () {
         try {
             super.initDomConts();
-            this.addChild(new mf.Component());
-            this.wrap(this.target());
-            this.target(this.child()[0].target());
+	    let wrap = new mofron.class.Component();
+	    this.child(wrap);
+	    this.childDom(wrap.childDom());
             
             this.layout(new Horizon());
             /* border config */
@@ -58,31 +62,18 @@ mf.comp.Header = class extends mf.Component {
     }
     
     /**
-     * contents wrapper
-     * 
-     * @param (mf.Dom) dom object
-     * @type private
-     */
-    wrap (prm) {
-       try { return this.member('wrap', ['Base', 'Dom'], prm); } catch (e) {
-           console.error(e.stack);
-           throw e;
-       }
-    }
-    
-    /**
      * header height
      * 
      * @param (string (size)) header height (default is "0.5rem")
      * @param (option) style option
      * @return (string (size)) header height
-     * @type tag parameter
+     * @type parameter
      */
     height (val, opt) {
         try {
             let ret = super.height(val,opt);
             if (undefined !== val) {
-                this.wrap().style({ height : val });
+	        cmputl.rstyle(this, { height : val });
             }
             return ret;
         } catch (e) {
@@ -97,7 +88,7 @@ mf.comp.Header = class extends mf.Component {
      * @param (boolean) true: header position is fixed. display header even if user scrolls. (default)
      *                  false: header position is not fixed.
      * @return (boolean) binding config
-     * @type tag parameter
+     * @type parameter
      */
     bind (flg) {
         try {
@@ -129,23 +120,17 @@ mf.comp.Header = class extends mf.Component {
      *
      * @param (mixed (color)) string: border bottom color name, #hex
      *                        array: [red, green, blue, (alpha)]
-     * @param (option) stye option
+     * @param (key-value) stye option
      * @return (string) border bottom color
      * @type parameter
      */
     mainColor (prm, opt) {
         try {
-            if (undefined === prm) {
-                /* getter */
-                return this.style("border-bottom-color");
-            }
-            /* setter */
-            mf.func.cmpColor(this, "border-bottom-color", [prm,opt]);
+            return cmputl.color(this, "border-bottom-color", prm, opt);
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
 }
-module.exports = mf.comp.Header;
 /* end of file */
