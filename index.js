@@ -1,9 +1,9 @@
 /**
- * @file  mofron-comp-header/index.js
- * @brief header component for mofron
- *        ex. it is for placing at the top of the page and displaying the site title etc.
+ * @file   mofron-comp-header/index.js
+ * @brief  header component for mofron
+ *         This component for placing at the top of the page etc. and displaying the site title etc.
  * @feature A header's child components are placed horizontally since header has a horizon layout.
- * @attention it needs false value at bind parameter when you don't use in page top position.
+ * @attention it maybe needs a 'false' config at bind parameter that used as a child component.
  * @license MIT
  */
 const Horizon = require('mofron-layout-horizon');
@@ -17,15 +17,15 @@ module.exports = class extends mofron.class.Component {
      *                key-value: component config
      * @type private
      */
-    constructor (p1) {
+    constructor (prm) {
         try {
             super();
 	    /* init config */
             this.name("Header");
 	    this.confmng().add("wrap", { type: "Dom" });
             
-            if (0 < arguments.length) {
-                this.config(p1);
+            if (undefined !== prm) {
+                this.config(prm);
             }
         } catch (e) {
             console.error(e.stack);
@@ -55,27 +55,6 @@ module.exports = class extends mofron.class.Component {
             this.size("100%", "0.5rem");
             this.bind(true);
             this.mainColor([211,211,211]);
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    /**
-     * header height
-     * 
-     * @param (string (size)) header height (default is "0.5rem")
-     * @param (option) style option
-     * @return (string (size)) header height
-     * @type parameter
-     */
-    height (val, opt) {
-        try {
-            let ret = super.height(val,opt);
-            if (undefined !== val) {
-	        cmputl.rstyle(this, { height : val });
-            }
-            return ret;
         } catch (e) {
             console.error(e.stack);
             throw e;
