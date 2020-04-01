@@ -62,6 +62,26 @@ module.exports = class extends mofron.class.Component {
     }
     
     /**
+     * header height
+     * 
+     * @param (string (size)) header height (default is "0.5rem")
+     * @param (option) style option
+     * @return (string (size)) header height
+     * @type parameter
+     */
+    height (val, opt) {
+        try {
+            if (undefined === val) {
+                return this.rootDom()[0].style("height");
+            }
+            cmputl.rstyle(this, { height : val }, opt);
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    /**
      * binding header 
      * 
      * @param (boolean) true: header position is fixed. display header even if user scrolls. (default)

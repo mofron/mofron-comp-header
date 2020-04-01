@@ -1,18 +1,18 @@
-#  mofron-comp-header
+#   mofron-comp-header
 [mofron](https://mofron.github.io/mofron/) is module based frontend framework.
 
-header component for mofron
+ header component for mofron
 
-ex. it is for placing at the top of the page and displaying the site title etc.
+This component for placing at the top of the page etc. and displaying the site title etc.
 
 ## Feature
  - A header's child components are placed horizontally since header has a horizon layout.
 ## Attention
- - it needs false value at bind parameter when you don't use in page top position.
+ - it maybe needs a 'false' config at bind parameter that used as a child component.
 
 # Install
 ```
-npm install mofron  mofron-comp-header
+npm install mofron   mofron-comp-header
 ```
 
 # Sample
