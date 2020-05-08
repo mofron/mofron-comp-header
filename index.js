@@ -74,7 +74,8 @@ module.exports = class extends mofron.class.Component {
             if (undefined === val) {
                 return this.rootDom()[0].style("height");
             }
-            cmputl.rstyle(this, { height : val }, opt);
+	    this.rootDom()[0].style({ height : val }, opt);
+	    this.getTree().getChild()[0].height(val,opt);
         } catch (e) {
             console.error(e.stack);
             throw e;
