@@ -21,7 +21,7 @@ module.exports = class extends mofron.class.Component {
         try {
             super();
 	    /* init config */
-            this.name("Header");
+            this.modname("Header");
 	    this.confmng().add("wrap", { type: "Dom" });
             
             if (undefined !== prm) {
