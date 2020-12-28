@@ -46,15 +46,17 @@ module.exports = class extends mofron.class.Component {
 	    this.childDom(wrap.childDom());
             
             this.layout(new Horizon());
-            /* border config */
+            
+	    let pvt = { private:true };
             this.style({
                 "border-bottom-style" : "solid",
                 "border-bottom-width" : "0.01rem"
-            });
+            }, pvt);
             
-            this.size("100%", "0.5rem");
+            this.width("100%",pvt);
+	    this.height("0.5rem",pvt);
             this.bind(true);
-            this.mainColor([211,211,211]);
+            this.mainColor([211,211,211],pvt);
         } catch (e) {
             console.error(e.stack);
             throw e;
