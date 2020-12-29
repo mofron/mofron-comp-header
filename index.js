@@ -45,9 +45,9 @@ module.exports = class extends mofron.class.Component {
 	    this.child(wrap);
 	    this.childDom(wrap.childDom());
             
-            this.layout(new Horizon());
-            
 	    let pvt = { private:true };
+            this.layout(new Horizon(),pvt);
+            
             this.style({
                 "border-bottom-style" : "solid",
                 "border-bottom-width" : "0.01rem"
